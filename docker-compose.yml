@@ -1,0 +1,14 @@
+services:
+  web:
+    build: ./rest
+    expose:
+      - 8000
+    command: uvicorn pj.asgi:application --host 0.0.0.0
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    ports:
+      - 80:80
+    depends_on:
+      - web
